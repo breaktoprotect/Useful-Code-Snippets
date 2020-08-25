@@ -18,14 +18,18 @@ def main():
 	
 	for i in range(5):
 		pool.apply_async(a_function, args=(L,i))
+	pool.close()
 	
 	print(pool.__dict__)
 	
-	# Wait for all processes to complete
+	# Inspect current processes waiting
 	while (len(pool._cache) > 0):
 		time.sleep(1)
 		print("[*] Current pool._cache:" + str(pool._cache))
 		
+	# Blocks until all processes are completed
+	pool.join()
+	
 	print(L)
 	print("[+] Program ended.")
 		
